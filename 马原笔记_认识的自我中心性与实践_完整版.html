@@ -1,0 +1,1178 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>马原笔记 | 认识的自我中心性与实践（完整版）</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        :root {
+            --primary: #6366f1;
+            --primary-dark: #4f46e5;
+            --secondary: #ec4899;
+            --success: #10b981;
+            --warning: #f59e0b;
+            --danger: #ef4444;
+            --bg: #0f172a;
+            --card-bg: #1e293b;
+            --text: #f1f5f9;
+            --text-muted: #94a3b8;
+            --accent: #22d3ee;
+            --border: rgba(255, 255, 255, 0.05);
+        }
+        
+        body {
+            font-family: 'Segoe UI', 'PingFang SC', 'Microsoft YaHei', sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.9;
+            min-height: 100vh;
+        }
+        
+        /* 导航栏 */
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: rgba(15, 23, 42, 0.98);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid var(--border);
+            z-index: 1000;
+            padding: 15px 30px;
+        }
+        
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .nav-logo {
+            font-size: 1.2rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .nav-links {
+            display: flex;
+            gap: 25px;
+        }
+        
+        .nav-links a {
+            color: var(--text-muted);
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: color 0.3s;
+        }
+        
+        .nav-links a:hover {
+            color: var(--accent);
+        }
+        
+        /* 主内容 */
+        .main-content {
+            margin-top: 80px;
+            padding: 40px 30px;
+        }
+        
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+        
+        /* 标题区 */
+        .hero {
+            text-align: center;
+            padding: 60px 30px;
+            background: linear-gradient(135deg, rgba(99, 102, 241, 0.1), rgba(236, 72, 153, 0.1));
+            border-radius: 20px;
+            margin-bottom: 40px;
+            border: 1px solid var(--border);
+        }
+        
+        .hero h1 {
+            font-size: 2.2rem;
+            margin-bottom: 15px;
+            background: linear-gradient(135deg, var(--text), var(--accent));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .hero .subtitle {
+            color: var(--text-muted);
+            font-size: 1.1rem;
+            margin-bottom: 25px;
+        }
+        
+        .hero .meta {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+        
+        .meta-tag {
+            background: rgba(99, 102, 241, 0.2);
+            padding: 8px 18px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            color: var(--accent);
+        }
+        
+        /* 章节标题 */
+        .section {
+            background: var(--card-bg);
+            border-radius: 16px;
+            padding: 35px;
+            margin-bottom: 30px;
+            border: 1px solid var(--border);
+        }
+        
+        .section-title {
+            font-size: 1.5rem;
+            color: var(--accent);
+            margin-bottom: 25px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid var(--border);
+        }
+        
+        .section-title .icon {
+            font-size: 1.8rem;
+        }
+        
+        /* 核心问题 */
+        .core-question {
+            background: linear-gradient(135deg, rgba(99, 102, 241, 0.15), rgba(236, 72, 153, 0.15));
+            border-left: 4px solid var(--primary);
+            padding: 25px;
+            border-radius: 0 12px 12px 0;
+            margin: 25px 0;
+        }
+        
+        .core-question h3 {
+            color: var(--primary);
+            margin-bottom: 12px;
+            font-size: 1rem;
+        }
+        
+        .core-question p {
+            font-size: 1.15rem;
+            line-height: 1.7;
+        }
+        
+        /* 知识点卡片 */
+        .knowledge-card {
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 12px;
+            padding: 25px;
+            margin-bottom: 25px;
+            border: 1px solid var(--border);
+        }
+        
+        .knowledge-card:last-child {
+            margin-bottom: 0;
+        }
+        
+        .kp-header {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+        
+        .kp-number {
+            width: 45px;
+            height: 45px;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 1.1rem;
+            flex-shrink: 0;
+        }
+        
+        .kp-title {
+            font-size: 1.2rem;
+            color: var(--text);
+        }
+        
+        /* 子标题 */
+        .sub-title {
+            color: var(--accent);
+            font-size: 1rem;
+            margin: 20px 0 12px;
+            font-weight: 600;
+        }
+        
+        /* 比喻框 */
+        .metaphor {
+            background: rgba(34, 211, 238, 0.08);
+            border: 1px solid rgba(34, 211, 238, 0.3);
+            border-radius: 12px;
+            padding: 20px 25px;
+            margin: 18px 0;
+            position: relative;
+        }
+        
+        .metaphor::before {
+            content: '💡 打个比方';
+            position: absolute;
+            top: -12px;
+            left: 20px;
+            background: var(--card-bg);
+            padding: 3px 12px;
+            font-size: 0.85rem;
+            color: var(--accent);
+            font-weight: 600;
+        }
+        
+        .metaphor p {
+            margin-top: 8px;
+            color: var(--text);
+        }
+        
+        /* 警示框 */
+        .warning {
+            background: rgba(239, 68, 68, 0.08);
+            border: 1px solid rgba(239, 68, 68, 0.3);
+            border-radius: 12px;
+            padding: 20px 25px;
+            margin: 18px 0;
+        }
+        
+        .warning-title {
+            color: var(--danger);
+            font-weight: 600;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        /* 列表 */
+        ul, ol {
+            margin-left: 25px;
+            margin-bottom: 15px;
+        }
+        
+        li {
+            margin-bottom: 10px;
+            color: var(--text-muted);
+        }
+        
+        li strong {
+            color: var(--text);
+        }
+        
+        /* 流程图 */
+        .flow-chart {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            padding: 30px 20px;
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 16px;
+            margin: 25px 0;
+        }
+        
+        .flow-item {
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            padding: 12px 20px;
+            border-radius: 10px;
+            font-weight: 500;
+            text-align: center;
+            font-size: 0.95rem;
+        }
+        
+        .flow-arrow {
+            font-size: 1.3rem;
+            color: var(--accent);
+        }
+        
+        /* 表格 */
+        .exam-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 25px 0;
+            font-size: 0.9rem;
+        }
+        
+        .exam-table th {
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            padding: 15px 12px;
+            text-align: left;
+            font-weight: 600;
+        }
+        
+        .exam-table td {
+            padding: 15px 12px;
+            border-bottom: 1px solid var(--border);
+            color: var(--text-muted);
+            vertical-align: top;
+        }
+        
+        .exam-table tr:hover td {
+            background: rgba(99, 102, 241, 0.05);
+        }
+        
+        /* 对话区 */
+        .dialogue {
+            margin: 25px 0;
+        }
+        
+        .dialogue-item {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 25px;
+        }
+        
+        .dialogue-avatar {
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.4rem;
+            flex-shrink: 0;
+        }
+        
+        .dialogue-avatar.gem {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+        }
+        
+        .dialogue-avatar.user {
+            background: linear-gradient(135deg, var(--success), #059669);
+        }
+        
+        .dialogue-content {
+            background: rgba(255, 255, 255, 0.03);
+            padding: 20px 25px;
+            border-radius: 16px;
+            border-top-left-radius: 4px;
+            flex: 1;
+        }
+        
+        .dialogue-content.user {
+            border-top-left-radius: 16px;
+            border-top-right-radius: 4px;
+            background: rgba(16, 185, 129, 0.08);
+        }
+        
+        .dialogue-name {
+            font-weight: 600;
+            margin-bottom: 10px;
+            color: var(--accent);
+            font-size: 0.95rem;
+        }
+        
+        .dialogue-text {
+            color: var(--text-muted);
+            line-height: 1.9;
+        }
+        
+        .dialogue-text p {
+            margin-bottom: 12px;
+        }
+        
+        .dialogue-text p:last-child {
+            margin-bottom: 0;
+        }
+        
+        /* 高亮 */
+        .highlight {
+            background: linear-gradient(135deg, rgba(99, 102, 241, 0.3), rgba(236, 72, 153, 0.3));
+            padding: 2px 8px;
+            border-radius: 4px;
+            color: var(--text);
+        }
+        
+        .key-term {
+            color: var(--accent);
+            font-weight: 600;
+        }
+        
+        .check-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            margin: 12px 0;
+        }
+        
+        .check-icon {
+            color: var(--success);
+            font-size: 1.2rem;
+            flex-shrink: 0;
+        }
+        
+        .check-icon.warning {
+            color: var(--warning);
+        }
+        
+        .check-icon.danger {
+            color: var(--danger);
+        }
+        
+        /* 自检报告 */
+        .report-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            padding: 15px;
+            background: rgba(0, 0, 0, 0.15);
+            border-radius: 10px;
+            margin-bottom: 12px;
+        }
+        
+        .report-icon {
+            font-size: 1.3rem;
+        }
+        
+        /* 页脚 */
+        .footer {
+            text-align: center;
+            padding: 50px;
+            color: var(--text-muted);
+            border-top: 1px solid var(--border);
+            margin-top: 50px;
+        }
+        
+        /* 回到顶部 */
+        .back-to-top {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            opacity: 0;
+            transition: opacity 0.3s, transform 0.3s;
+            font-size: 1.5rem;
+            box-shadow: 0 10px 30px rgba(99, 102, 241, 0.4);
+        }
+        
+        .back-to-top.visible {
+            opacity: 1;
+        }
+        
+        .back-to-top:hover {
+            transform: translateY(-5px);
+        }
+        
+        /* 锚点 */
+        html {
+            scroll-behavior: smooth;
+        }
+        
+        [id] {
+            scroll-margin-top: 100px;
+        }
+        
+        /* 引用 */
+        blockquote {
+            border-left: 4px solid var(--accent);
+            padding-left: 20px;
+            margin: 20px 0;
+            color: var(--text-muted);
+            font-style: italic;
+        }
+        
+        /* 强调段落 */
+        .emphasis-box {
+            background: linear-gradient(135deg, rgba(99, 102, 241, 0.1), rgba(236, 72, 153, 0.1));
+            padding: 25px;
+            border-radius: 12px;
+            margin: 25px 0;
+            text-align: center;
+        }
+        
+        .emphasis-box p {
+            font-size: 1.1rem;
+            color: var(--text);
+        }
+        
+        .emphasis-box .big-text {
+            font-size: 1.4rem;
+            color: var(--accent);
+            margin-top: 15px;
+            font-weight: 600;
+        }
+        
+        /* 阶段标记 */
+        .phase-badge {
+            display: inline-block;
+            background: linear-gradient(135deg, var(--success), #059669);
+            color: white;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            margin-bottom: 20px;
+            font-weight: 600;
+        }
+        
+        /* 题目框 */
+        .question-box {
+            background: rgba(245, 158, 11, 0.1);
+            border: 1px solid rgba(245, 158, 11, 0.3);
+            border-radius: 12px;
+            padding: 25px;
+            margin: 20px 0;
+        }
+        
+        .question-box-title {
+            color: var(--warning);
+            font-weight: 600;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        /* 回答评估 */
+        .evaluation {
+            margin: 15px 0;
+        }
+        
+        .eval-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            margin: 10px 0;
+            padding: 12px 15px;
+            background: rgba(0, 0, 0, 0.15);
+            border-radius: 8px;
+        }
+    </style>
+</head>
+<body>
+    <!-- 导航栏 -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">📚 马原学习笔记（完整版）</div>
+            <div class="nav-links">
+                <a href="index.html">🏠 首页</a>
+                <a href="#core">核心问题</a>
+                <a href="#extract">内容提取</a>
+                <a href="#knowledge">知识点</a>
+                <a href="#exam">考点</a>
+                <a href="#dialogue">模拟问答</a>
+                <a href="#dmn">DMN详解</a>
+                <a href="#tree">树的问题</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- 主内容 -->
+    <main class="main-content">
+        <div class="container">
+            <!-- 标题区 -->
+            <div class="hero">
+                <h1>认识的自我中心性与实践</h1>
+                <p class="subtitle">马克思主义基本原理 · 认识论专题 · 完整学习笔记</p>
+                <div class="meta">
+                    <span class="meta-tag">📖 汉语言文学专业</span>
+                    <span class="meta-tag">🎓 大二课程</span>
+                    <span class="meta-tag">📝 含AI教练对话全流程</span>
+                    <span class="meta-tag">🎯 老师挖坑预警</span>
+                </div>
+            </div>
+
+            <!-- 背景说明 -->
+            <div class="section">
+                <h2 class="section-title"><span class="icon">🎓</span>学习背景</h2>
+                <p style="color: var(--text-muted); margin-bottom: 20px;">我是汉语言文学的大二学生，这是我马原课程的作业，要求我做笔记，下节课老师会提问。老师喜欢结合生活案例、经典哲学对比以及设置"逻辑陷阱"来捕捉深度理解。</p>
+                
+                <div class="knowledge-card">
+                    <h4 style="color: var(--accent); margin-bottom: 15px;">📌 老师之前的提问风格示例</h4>
+                    <p style="color: var(--text-muted);"><strong>关于感性思维与理性思维：</strong>以苹果为例，说明什么是感觉、知觉、表象、概念、判断、推理。</p>
+                    <p style="color: var(--text-muted); margin-top: 15px;"><strong>关于劳动：</strong>马克思说劳动，恰恰是亚里士多德鄙视的生产技术活动，才是人的本质的体现。如果大学校长（亚里士多德所说的伦理政治活动）、大学教授（理论沉思）、清洁工（亚里士多德认为最低贱的体力劳动）这三份工作摆在你面前，你会怎么选？</p>
+                    <div class="warning" style="margin-top: 15px;">
+                        <p style="color: var(--text-muted);">选1,2就说明你鄙视体力劳动，不符合马克思认为的生产技术劳动体现人的本质；选3就又要说你怎么怎么样；而答案是马克思所说的体现人的本质的劳动是<span class="highlight">自由劳动</span>，区别于<span class="highlight">异化劳动</span>。</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 第一阶段：内容提取 -->
+            <div id="extract" class="section">
+                <span class="phase-badge">📋 第一阶段：内容提取</span>
+                <h2 class="section-title"><span class="icon">📄</span>从文档截图中提取的核心内容</h2>
+                
+                <div class="knowledge-card">
+                    <h4 style="color: var(--accent); margin-bottom: 15px;">一、认识的"自我中心"来源</h4>
+                    <ul>
+                        <li><strong>进化留下的"节能型"大脑：</strong>威胁优先、验证偏差、节能模式</li>
+                        <li><strong>认知结构中的"自我优先通道"：</strong>默认模式网络（DMN）</li>
+                        <li><strong>心理免疫系统：</strong>认知快捷</li>
+                    </ul>
+                </div>
+                
+                <div class="knowledge-card">
+                    <h4 style="color: var(--accent); margin-bottom: 15px;">二、认识的特性（惊人）</h4>
+                    <ul>
+                        <li><strong>引人注目性</strong></li>
+                        <li><strong>片面性</strong></li>
+                        <li><strong>顽固性</strong></li>
+                    </ul>
+                </div>
+                
+                <div class="knowledge-card">
+                    <h4 style="color: var(--accent); margin-bottom: 15px;">三、实践是打破"自我中心"的唯一途径</h4>
+                    <ul>
+                        <li><strong>引入"非我"反馈</strong></li>
+                        <li><strong>绕过心理防御（内部生成结论）</strong></li>
+                        <li><strong>扩展认识边界（改变接受区）</strong></li>
+                        <li><strong>检验并修改认识</strong></li>
+                    </ul>
+                </div>
+                
+                <div class="emphasis-box">
+                    <p><strong>哲学总结</strong></p>
+                    <p style="margin-top: 10px;">认识是在实践中产生、检验、发展的，实践是连接<span class="key-term">"我"</span>与<span class="key-term">"世界"</span>的桥梁。</p>
+                </div>
+            </div>
+
+            <!-- 第二阶段：消化 -->
+            <div id="knowledge" class="section">
+                <span class="phase-badge">🧠 第二阶段：消化</span>
+                <h2 class="section-title"><span class="icon">🗺️</span>知识点地图</h2>
+                <p style="color: var(--text-muted); margin-bottom: 25px;">在老师喜欢出那样的"挖坑"让你跳的题目中，我们的笔记必须直击逻辑底层，而不仅仅是背诵定义。</p>
+                
+                <!-- 核心问题 -->
+                <div id="core" class="core-question">
+                    <h3>🎯 核心问题（≤30字）</h3>
+                    <p>大脑天生爱"自以为是"，我们怎么靠"干活（实践）"来认清真相？</p>
+                </div>
+
+                <!-- 知识点1 -->
+                <div class="knowledge-card">
+                    <div class="kp-header">
+                        <div class="kp-number">01</div>
+                        <h3 class="kp-title">认识的"默认设置"：自我中心性</h3>
+                    </div>
+                    
+                    <h4 class="sub-title">是什么</h4>
+                    <p style="color: var(--text-muted);">大脑为了生存，本能地以"我"为坐标系处理信息，导致<span class="highlight">优势、偏向和固执</span>。</p>
+                    
+                    <div class="metaphor">
+                        <p>你手机里的<strong>"个性化推荐算法"</strong>。它只是给你看你想看的，让你觉得全世界都跟你想的一样，但其实是个<strong>"信息茧房"</strong>。</p>
+                    </div>
+                    
+                    <h4 class="sub-title">反过来</h4>
+                    <p style="color: var(--text-muted);">这是问题的起点。只有承认有偏见，才能理解为什么需要引入"实践"。</p>
+                    
+                    <h4 class="sub-title">怎么考试</h4>
+                    <ul>
+                        <li>"为什么说'偏见'不是道德问题而是科学问题？"</li>
+                        <li>"为什么我们总是'听不进真理'？"</li>
+                    </ul>
+                    
+                    <div class="warning">
+                        <div class="warning-title">⚠️ 易踩的坑</div>
+                        <p style="color: var(--text-muted);">不要把"自我中心"当成"自私"。它是<span class="key-term">认知层面的本能</span>（为了节省能量、躲避危险），而不是道德层面的自私。</p>
+                    </div>
+                </div>
+
+                <!-- 知识点2 -->
+                <div class="knowledge-card">
+                    <div class="kp-header">
+                        <div class="kp-number">02</div>
+                        <h3 class="kp-title">实践"铁锤"作用：非我反馈</h3>
+                    </div>
+                    
+                    <h4 class="sub-title">是什么</h4>
+                    <p style="color: var(--text-muted);">实践让你走出大脑的闭环，去接触那个<span class="highlight">不以你的意志为转移</span>的客观世界。</p>
+                    
+                    <div class="metaphor">
+                        <p>你在脑子里排练了100遍怎么跟女神表白，觉得稳了（<strong>珍贵幻想</strong>）；结果一张嘴对方说"去洗澡了"（<strong>非我反馈</strong>）。这盆冷水就是实践给你的"非我"评估。</p>
+                    </div>
+                    
+                    <h4 class="sub-title">反过来</h4>
+                    <p style="color: var(--text-muted);">这是打破"自我中心"的第一步，通过现实的打击强行中断大脑的自嗨。</p>
+                    
+                    <h4 class="sub-title">考试怎么考</h4>
+                    <ul>
+                        <li>参考你之前"苹果"的例子，老师可能会问："你认为某种药能治感冒，但吃了没好，这在认识论上说明了什么？"</li>
+                    </ul>
+                </div>
+
+                <!-- 知识点3 -->
+                <div class="knowledge-card">
+                    <div class="kp-header">
+                        <div class="kp-number">03</div>
+                        <h3 class="kp-title">实践的"内部生成"机制</h3>
+                    </div>
+                    
+                    <h4 class="sub-title">是什么</h4>
+                    <p style="color: var(--text-muted);">别人告诉你的道理是<span class="key-term">"心理外加"</span>的，容易引起防御；你自己做实验失败所得的结论是<span class="key-term">"内生"</span>的，大脑更容易接受。</p>
+                    
+                    <div class="metaphor">
+                        <p>妈妈说"别玩火"你不听（<strong>心理防御</strong>）；你自己被火烫了个水泡（<strong>实践结论</strong>），从而彻底理解了火的危险。</p>
+                    </div>
+                    
+                    <h4 class="sub-title">反过来</h4>
+                    <p style="color: var(--text-muted);">解释了为什么实践比"讲道理"更具教育意义。</p>
+                </div>
+
+                <!-- 知识点4 -->
+                <div class="knowledge-card">
+                    <div class="kp-header">
+                        <div class="kp-number">04</div>
+                        <h3 class="kp-title">实践是检验真理的唯一标准</h3>
+                    </div>
+                    
+                    <h4 class="sub-title">是什么</h4>
+                    <p style="color: var(--text-muted);">认识对不对，不认为它逻辑顺不顺，而认为它在<span class="highlight">现实中行不行得通</span>。</p>
+                    
+                    <div class="metaphor">
+                        <p>地图一张画得再漂亮（<strong>认识</strong>），如果不按它走不到目的地（<strong>实践失败</strong>），那就错了。</p>
+                    </div>
+                    
+                    <h4 class="sub-title">考试怎么考</h4>
+                    <ul>
+                        <li>结合你上次"异化劳动"的陷阱题，老师这次可能会问："如果一个理论听起来完美无缺，但大家都做不到，这个理论是真理吗？"</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- 知识点关系链 -->
+            <div class="section">
+                <h2 class="section-title"><span class="icon">🔗</span>知识点关系链</h2>
+                <div class="flow-chart">
+                    <div class="flow-item">演化大脑</div>
+                    <span class="flow-arrow">→</span>
+                    <div class="flow-item">自我中心闭环/偏见</div>
+                    <span class="flow-arrow">→</span>
+                    <div class="flow-item">实践活动</div>
+                    <span class="flow-arrow">→</span>
+                    <div class="flow-item">非我反馈</div>
+                    <span class="flow-arrow">→</span>
+                    <div class="flow-item">认识正确</div>
+                </div>
+            </div>
+
+            <!-- 高概率卡点 -->
+            <div id="exam" class="section">
+                <h2 class="section-title"><span class="icon">⚠️</span>高概率卡点（老师提问预警）</h2>
+                
+                <div class="knowledge-card">
+                    <h4 style="color: var(--danger); margin-bottom: 15px;">🕳️ 坑1：以为"实践"就是简单的体力劳动</h4>
+                    <p style="color: var(--text-muted); margin-bottom: 15px;"><strong>为什么会踩：</strong>受上次"清洁工"主题影响，很容易把实践缩小化。</p>
+                    <p style="color: var(--text-muted);"><strong>理解正确：</strong>实践是<span class="highlight">"主观见之于客观"</span>的活动。包括科学实验、社会变革，甚至你写论文查资料寻求证据的过程也是实践。</p>
+                </div>
+                
+                <div class="knowledge-card">
+                    <h4 style="color: var(--danger); margin-bottom: 15px;">🕳️ 坑2：认为实践一次就能获得真理</h4>
+                    <p style="color: var(--text-muted); margin-bottom: 15px;"><strong>为什么会踩：</strong>觉得只要"做了"就能"懂了"。</p>
+                    <p style="color: var(--text-muted);"><strong>正确理解：</strong>认识是<span class="highlight">循环往复</span>的。前面提到的实践是"一步走出牢笼"，这说明真理是一个不断接近的过程，而不是一蹴而就的。</p>
+                </div>
+            </div>
+
+            <!-- 自检报告 -->
+            <div class="section">
+                <h2 class="section-title"><span class="icon">📊</span>自检报告</h2>
+                
+                <div class="report-item">
+                    <span class="report-icon">✅</span>
+                    <div>
+                        <strong style="color: var(--text);">材料覆盖率：</strong>
+                        <span style="color: var(--text-muted);">100%。重点强化了"实践如何打破自我中心"的逻辑。</span>
+                    </div>
+                </div>
+                
+                <div class="report-item">
+                    <span class="report-icon">📌</span>
+                    <div>
+                        <strong style="color: var(--text);">补充内容：</strong>
+                        <span style="color: var(--text-muted);">补充了关于"内生结论"与"外加道理"的对比，方便你看待老师的案例分析。</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- DMN详解 -->
+            <div id="dmn" class="section">
+                <span class="phase-badge">🧬 脑科学补充</span>
+                <h2 class="section-title"><span class="icon">🧠</span>默认模式网络（DMN）详解</h2>
+                
+                <h4 class="sub-title">为什么你发呆时一直是"自我中心"？</h4>
+                
+                <div class="knowledge-card">
+                    <h4 style="color: var(--accent); margin-bottom: 15px;">这是什么</h4>
+                    <p style="color: var(--text-muted);">这就是你大脑的一套<span class="highlight">"背景程序"</span>。当你不专注于具体任务（比如发呆、坐公交出神）时，这套网络就会自动激活。</p>
+                </div>
+                
+                <div class="knowledge-card">
+                    <h4 style="color: var(--accent); margin-bottom: 15px;">内容是什么</h4>
+                    <p style="color: var(--text-muted);">它主要处理三件事：</p>
+                    <ul>
+                        <li>回忆过去</li>
+                        <li>幻想未来</li>
+                        <li>琢磨别人怎么看我</li>
+                    </ul>
+                </div>
+                
+                <div class="knowledge-card">
+                    <h4 style="color: var(--accent); margin-bottom: 15px;">重要的是</h4>
+                    <p style="color: var(--text-muted);">它证明了<span class="highlight">"自我中心"是人类大脑的节电/默认状态</span>。要获得客观认识，你必须"强行切换"为消耗能量更高的执行网络。</p>
+                </div>
+                
+                <div class="metaphor">
+                    <p><strong>老师提问点：</strong>如果老师问"为什么我们什么都不干，也很难客观？"你就可以祭出这个词："因为大脑有<span class="key-term">'默认模式网络'</span>，空闲状态就是自我中心状态。"</p>
+                </div>
+            </div>
+
+            <!-- 模拟问答 -->
+            <div id="dialogue" class="section">
+                <span class="phase-badge">🎯 第一阶段：诊断测试</span>
+                <h2 class="section-title"><span class="icon">💬</span>模拟老师"挖坑"现场</h2>
+                <p style="color: var(--text-muted); margin-bottom: 25px;">针对本课的核心："认识的自我中心"与"实践的意义"，请回答下面两道题。记住，老师的陷阱通常藏在"听起来很正确"的废话里。</p>
+                
+                <!-- 第一题 -->
+                <div class="question-box">
+                    <div class="question-box-title">📝 第一题：概念辨析（陷阱题）</div>
+                    <p style="color: var(--text-muted);">某位文学批评家说："我读过几千本书，见识过无数种人生，所以我不需要出门实践，我的认识也已经超越了'自我中心'，达到了真理。"</p>
+                    <p style="color: var(--text-muted); margin-top: 15px;"><strong>问：</strong>从马克思主义认识论的角度看，这位批评家的说法对吗？为什么？</p>
+                </div>
+                
+                <!-- 第二题 -->
+                <div class="question-box">
+                    <div class="question-box-title">📝 第二题：场景应用（教师风格题）</div>
+                    <p style="color: var(--text-muted);">老师拿出一个精致的盒子，告诉你里面装的是"真理"。</p>
+                    <ul style="margin-top: 15px;">
+                        <li><strong>A同学说：</strong>"只要我逻辑足够严密，我就能推导出里面是什么。"（理性推导）</li>
+                        <li><strong>B同学说：</strong>"只要我全神贯注地观察它，我就能洞察到它的本质。"（感性直觉）</li>
+                        <li><strong>C同学说：</strong>"老师你直接告诉我吧，你是权威，你说的就是真理。"（权威接收）</li>
+                    </ul>
+                    <p style="color: var(--text-muted); margin-top: 15px;"><strong>问：</strong>请你根据今天学的材料，指出这三位同学共同的错误是什么？如果你想知道盒子里到底是什么，你会怎么做？</p>
+                </div>
+                
+                <!-- 我的回答 -->
+                <div class="dialogue">
+                    <div class="dialogue-item">
+                        <div class="dialogue-avatar user">👤</div>
+                        <div class="dialogue-content user">
+                            <div class="dialogue-name">我的回答</div>
+                            <div class="dialogue-text">
+                                <p><strong>第一题：</strong>不对。没有实践无法得到真知。</p>
+                                <p style="margin-top: 12px;"><strong>第二题：</strong></p>
+                                <p>A，没有实践，只停留在主观世界。</p>
+                                <p>B，单纯地观察，正如王阳明"格竹"的错误，也是停留在主观世界。</p>
+                                <p>C，直接不思考，盲从权威。</p>
+                                <p style="margin-top: 12px;"><strong>共同错误：</strong>没有实践，停留在主观世界。</p>
+                                <p style="margin-top: 12px;"><strong>我会：</strong>把盒子里面的东西拿出来观察、做实验，通过实践形成认识，再用认识引领实践，再得出新的认识，再实践，如此循环，让认识逐步趋近于真理。</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Gem评价 -->
+                <div class="dialogue">
+                    <div class="dialogue-item">
+                        <div class="dialogue-avatar gem">🤖</div>
+                        <div class="dialogue-content">
+                            <div class="dialogue-name">Gem评价</div>
+                            <div class="dialogue-text">
+                                <p>不错，你的直觉非常敏锐，已经抓住了<span class="highlight">"主观闭环"</span>这个核心，尤其是前面提到的王阳明"格竹"的例子，这很符合你汉语言文学专业背景的深度。</p>
+                                <p style="margin-top: 15px;">但如果我是你的马原老师，我会顺着你的回答继续<span class="highlight">"深挖坑"</span>。让我们来看看你的回答中哪些地方是真懂了，哪些地方可能被老师"挂"掉了。</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 详细评估 -->
+                <div class="knowledge-card">
+                    <h4 style="color: var(--accent); margin-bottom: 20px;">📋 详细评估</h4>
+                    
+                    <div class="evaluation">
+                        <div class="eval-item">
+                            <span class="check-icon">✅</span>
+                            <div>
+                                <strong style="color: var(--success);">真懂了：</strong>
+                                <span style="color: var(--text-muted);">你准确地认出了这三个人都在"主观世界"里打转。特别是对C同学"盲从权威"的批判很充分。</span>
+                            </div>
+                        </div>
+                        
+                        <div class="eval-item">
+                            <span class="check-icon warning">⚠️</span>
+                            <div>
+                                <strong style="color: var(--warning);">似懂非懂：</strong>
+                                <span style="color: var(--text-muted);">你对"实践"的理解还停留在"动作"层面。老师可能会追问你："格竹"不也是在看吗？"实践观察"不也是在看吗？为什么王阳明错了，而你的实践就对了？</span>
+                            </div>
+                        </div>
+                        
+                        <div class="eval-item">
+                            <span class="check-icon danger">❌</span>
+                            <div>
+                                <strong style="color: var(--danger);">逻辑漏洞：</strong>
+                                <span style="color: var(--text-muted);">在第一题中，你只说了"没有实践无法得到真知"，但忽略了材料里最扎心的一点——<span class="highlight">"书本知识"对大脑来说其实是一种"外部强加"</span>。</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 费曼深挖 -->
+            <div class="section">
+                <span class="phase-badge">🔬 第二阶段：费曼深挖</span>
+                <h2 class="section-title"><span class="icon">🔍</span>针对薄弱点，换个角度切入</h2>
+                <p style="color: var(--text-muted); margin-bottom: 25px;">为了让你在下一节课"无懈可击"，我们需要把这两个点彻底咀嚼碎裂。</p>
+                
+                <div class="knowledge-card">
+                    <h4 style="color: var(--accent); margin-bottom: 20px;">1. 精确区分：为什么"格竹"不是实践，而"做实验"是？</h4>
+                    
+                    <p style="color: var(--text-muted); margin-bottom: 15px;">王阳明对着竹子看七天七夜（格竹），最后大病一场。这在马原里不叫实践，叫<span class="highlight">"直观的直观论"</span>。</p>
+                    
+                    <p style="color: var(--text-muted); margin-bottom: 15px;"><strong>差别在哪？</strong>实践不是"坐在那看"，而是<span class="highlight">"改变"</span>。</p>
+                    
+                    <div class="metaphor">
+                        <p>如果你只是看盒子，你仍然在受到"自我中心"的干扰（你可能会想：这个盒子真的很漂亮，肯定装的是项链）。</p>
+                        <p style="margin-top: 10px;">你要补充的重点是：实践是<span class="key-term">"主观见之于客观"</span>。你得去触碰、拆解、使用盒子里的东西。比如盒子里是一把剪刀，你得拿它去剪纸，当它"咔嚓"一声剪断纸张时，这个<span class="highlight">"反馈"</span>才是打破你幻想的铁锤。</p>
+                    </div>
+                </div>
+                
+                <div class="knowledge-card">
+                    <h4 style="color: var(--accent); margin-bottom: 20px;">2. 费曼检验：请你解释"书本知识"</h4>
+                    
+                    <p style="color: var(--text-muted); margin-bottom: 20px;">回到第一题，文学批评家读了几千本书。如果你是老师，你问他："书里的知识不也是前人的实践总结吗？我读的不就等于我的实践吗？"</p>
+                    
+                    <p style="color: var(--text-muted); margin-bottom: 15px;"><strong>请你试着用自己的话反驳他</strong>（想象你在跟傲慢的批评家辩论）：</p>
+                    
+                    <blockquote style="color: var(--text-muted);">"读万卷书"固然重要，但为什么如果不是"行万里路（实践）"，这些书上的知识在大脑里依然只是'自我中心'的幻觉？</blockquote>
+                    
+                    <p style="color: var(--text-muted); margin-top: 15px;">（提示：结合材料里说的"心理防御"和"内部生成"来回答试试看。）</p>
+                </div>
+                
+                <!-- 我的第二次回答 -->
+                <div class="dialogue">
+                    <div class="dialogue-item">
+                        <div class="dialogue-avatar user">👤</div>
+                        <div class="dialogue-content user">
+                            <div class="dialogue-name">我的回答</div>
+                            <div class="dialogue-text">
+                                <p>别人的实践结果只是从别人的实践经历中得出，含有主客观因素，换成你来复刻这个实践可能又会因为主客观因素导致不同的结果。</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Gem深度解析 -->
+                <div class="dialogue">
+                    <div class="dialogue-item">
+                        <div class="dialogue-avatar gem">🤖</div>
+                        <div class="dialogue-content">
+                            <div class="dialogue-name">Gem · 深度解析</div>
+                            <div class="dialogue-text">
+                                <p>很有道理！你敏锐地察觉到了<span class="highlight">"别人的"认识与"我的真知"</span>之间那道巨大的鸿沟。</p>
+                                <p style="margin-top: 15px;">如果我是你的老师，我对你的回答非常满意，但我会用马克思主义认识论的术语把这种直觉"武装"得更专业。我们可以从两个维度去反驳那个文学批评家：</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="knowledge-card">
+                    <h4 style="color: var(--accent); margin-bottom: 15px;">维度1："外加"结论 vs "内生"结论（破除心理防御）</h4>
+                    <p style="color: var(--text-muted); margin-bottom: 15px;">你提到的"主客观因素导致不同的结果"，在材料里对应的是<span class="highlight">"心理免疫系统"</span>。</p>
+                    
+                    <p style="color: var(--text-muted); margin-bottom: 10px;"><strong>书本知识（外加）：</strong></p>
+                    <p style="color: var(--text-muted); margin-bottom: 15px;">对大脑来说，书上的道理是外部强加给我的"信息包"。如果这个信息与自身的偏见不符，我的大脑就会启动"防御机制"（拒绝、驳斥、合理化）。</p>
+                    
+                    <p style="color: var(--text-muted); margin-bottom: 10px;"><strong>实践反馈（内生）：</strong></p>
+                    <p style="color: var(--text-muted);">当我亲自实践时，现实世界给了我一个响亮的"耳光"，这个反馈不是别人给我耳朵的"意见"，而是我自己亲身经历的"事实"。这种<span class="highlight">由内在而生的认识</span>，可以绕过心理防御，强迫修改大脑旧逻辑。</p>
+                </div>
+                
+                <div class="knowledge-card">
+                    <h4 style="color: var(--accent); margin-bottom: 15px;">维度2："自我封闭系统"与"开放系统"（打破自我中心）</h4>
+                    
+                    <p style="color: var(--text-muted); margin-bottom: 15px;"><strong>封闭式读书：</strong></p>
+                    <p style="color: var(--text-muted); margin-bottom: 15px;">批评家读几千本书，往往会陷入<span class="highlight">"验证性偏见"</span>。他会下意识地挑选那些支持他观点的书读，或者用他已有的偏见去读新书。这依然是在他大脑的"自我闭环"里打转。</p>
+                    
+                    <p style="color: var(--text-muted); margin-bottom: 10px;"><strong>实践（开放系统）：</strong></p>
+                    <p style="color: var(--text-muted);">实践是唯一的桥梁，通向那个<span class="highlight">"不以人的意志为转移"</span>的客观世界。就像你说的，复刻实践时，客观环境的变量会强迫你面对"意外"，这些意外才是让你真正走出"自我中心"的契机。</p>
+                </div>
+            </div>
+
+            <!-- 防身速查表 -->
+            <div class="section">
+                <h2 class="section-title"><span class="icon">🛡️</span>防身速查表</h2>
+                <p style="color: var(--text-muted); margin-bottom: 20px;">你可以把这份清单存在手机里，考前最后10分钟快速扫描。</p>
+                
+                <table class="exam-table">
+                    <thead>
+                        <tr>
+                            <th style="width: 15%;">核心考点</th>
+                            <th style="width: 25%;">老师可能怎么问（陷阱）</th>
+                            <th style="width: 35%;">满分回答关键词</th>
+                            <th style="width: 25%;">易错提醒</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>自我中心来源</strong></td>
+                            <td>偏见是道德问题吗？</td>
+                            <td>进化遗留/默认模式网络(DMN)。是内部的"默认设置"，为了节能和生存。</td>
+                            <td>不是因为"坏"，是因为大脑"懒"。</td>
+                        </tr>
+                        <tr>
+                            <td><strong>实践的定义</strong></td>
+                            <td>探究东西看着是实践吗？</td>
+                            <td>主观见之于客观。必须有"改变世界"的行动，才能获得"非我"的见证评估。</td>
+                            <td>实践≠观察。实践是打破幻觉的"铁锤"。</td>
+                        </tr>
+                        <tr>
+                            <td><strong>真理的检验</strong></td>
+                            <td>逻辑自洽就是真理吗？</td>
+                            <td>实践是唯一标准。理论必须在现实中"跑通"才算真理。</td>
+                            <td>权威说的话、书上的逻辑、内心的直觉都不标准。</td>
+                        </tr>
+                        <tr>
+                            <td><strong>认识的过程</strong></td>
+                            <td>实践一次就够了吗？</td>
+                            <td>循环往复/无限。接近实践→认识→再实践，不断扩展认识的"接受区"。</td>
+                            <td>别指望取得最终满意的认识。是呈螺旋式增长的。</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- 树的问题 -->
+            <div id="tree" class="section">
+                <span class="phase-badge">🌳 终极挑战</span>
+                <h2 class="section-title"><span class="icon">🌲</span>树的颜色问题</h2>
+                
+                <div class="question-box">
+                    <div class="question-box-title">📝 实战问题</div>
+                    <p style="color: var(--text-muted);">如果在下周课上，老师突然指着窗外的一棵树问你：</p>
+                    <p style="color: var(--text-muted); margin-top: 15px; font-size: 1.1rem;">"这棵树在我眼里是绿色的，在一个色盲眼里是灰色的。你说这棵树<strong>'到底'</strong>是什么颜色的？我们怎么通过'实践'来达成共识？"</p>
+                    <p style="color: var(--text-muted); margin-top: 15px;">你怎么利用今天学的<span class="highlight">"非我反馈"</span>和<span class="highlight">"打破自我中心"</span>来回答他？</p>
+                </div>
+                
+                <!-- 我的回答 -->
+                <div class="dialogue">
+                    <div class="dialogue-item">
+                        <div class="dialogue-avatar user">👤</div>
+                        <div class="dialogue-content user">
+                            <div class="dialogue-name">我的回答</div>
+                            <div class="dialogue-text">
+                                <p>这棵树到底是绿色的。老师看无数棵这样的树，得出的结论都是绿色，而且所有的非色盲（占人类的绝大多数）都认同；而色盲也这么做，得出结论都是灰色，所以非色盲都不认同。于是得到共识，是绿色，色盲是有视觉缺陷。</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Gem评价 -->
+                <div class="dialogue">
+                    <div class="dialogue-item">
+                        <div class="dialogue-avatar gem">🤖</div>
+                        <div class="dialogue-content">
+                            <div class="dialogue-name">Gem评价</div>
+                            <div class="dialogue-text">
+                                <p>这个答案已经很有"马原味儿"了，你抓住了<span class="highlight">"真理的客观性"和"主体的局限"</span>。</p>
+                                <p style="margin-top: 15px;">但我要提醒你，按照你这位老师"爱挖坑"的性格，他可能会在这里对你发起第二次"异化"攻击：</p>
+                                <blockquote style="margin-top: 15px;">"你说这是共识，那如果全人类都变成了色盲，这棵树就真的变成灰色了吗？真理难道是靠'少数服从多数'投票决定的吗？"</blockquote>
+                                <p style="margin-top: 15px;">为了让你在课堂上彻底封神，我们需要用实践论把这个逻辑推向最终形态。</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 终极答案 -->
+                <div class="knowledge-card">
+                    <h4 style="color: var(--accent); margin-bottom: 20px;">🏆 如果质疑老师"大多数人说了算"，你可以这样回应：</h4>
+                    
+                    <h4 class="sub-title">颜色不仅是视觉感受（主观），更是物理属性（客观）</h4>
+                    <p style="color: var(--text-muted); margin-bottom: 20px;">树叶呈现绿色，是因为其中的叶绿素吸收红光和蓝紫光、反射绿光。这是一种特定波长的电磁波。</p>
+                    
+                    <h4 class="sub-title">实践是唯一的"翻译官"</h4>
+                    <p style="color: var(--text-muted); margin-bottom: 20px;">我们可以通过实践工具（比如分光光度计）去测量。不管你是色盲还是正常人，仪器测出来的波长数据是一致的。这就是材料里说的<span class="highlight">"不以人的意志为转移"的非我反馈</span>。</p>
+                    
+                    <h4 class="sub-title">实践让共识成为可能</h4>
+                    <p style="color: var(--text-muted); margin-bottom: 20px;">我们可以利用"绿色"这个属性去进行实践。比如，我们规定"绿色的果子可以摘，灰色的不行"。</p>
+                    
+                    <h4 class="sub-title">色盲的困境</h4>
+                    <p style="color: var(--text-muted); margin-bottom: 20px;">如果他坚持那是灰色，在特定的采摘实践中他会失败（分不清熟没熟）。</p>
+                    
+                    <h4 class="sub-title">实践的修正</h4>
+                    <p style="color: var(--text-muted);">当色盲通过实践发现"虽然我看它是灰色的，但按你们说的'绿色'去操作，结果是对的"，随后，实践让他修正了自己的主观认识。</p>
+                </div>
+                
+                <!-- 理解链条 -->
+                <div class="knowledge-card">
+                    <h4 style="color: var(--accent); margin-bottom: 20px;">🔗 你现在理解的链条是：</h4>
+                    <div class="flow-chart" style="padding: 20px;">
+                        <div class="flow-item">大脑有局限</div>
+                        <span class="flow-arrow">→</span>
+                        <div class="flow-item">主观会打架</div>
+                        <span class="flow-arrow">→</span>
+                        <div class="flow-item">实践定乾坤</div>
+                    </div>
+                    <p style="color: var(--text-muted); text-align: center; margin-top: 15px;">（色盲是生理局限，自我中心是认知局限）→（我觉得绿，你觉得灰，谁也不服谁）→（别光看，去测波长、去摘果子、去用它，谁能引领实践成功，谁就是真理）</p>
+                </div>
+            </div>
+
+            <!-- 辅导员总结 -->
+            <div class="section">
+                <h2 class="section-title"><span class="icon">🎓</span>辅导员总结</h2>
+                
+                <div class="emphasis-box">
+                    <p>你现在的状态已经超出了"单纯做笔记"的要求。你不仅掌握了材料，还能运用<span class="highlight">"实践是检验真理的唯一标准"</span>去破除各种主观幻觉。</p>
+                </div>
+                
+                <div class="knowledge-card">
+                    <h4 style="color: var(--accent); margin-bottom: 15px;">💡 记住这一点</h4>
+                    <p style="color: var(--text-muted);">不管老师提出怎样玄乎的案例，你就问他一句——</p>
+                    <p class="big-text">"咱们不妨试试，看看现实怎么反馈？"</p>
+                </div>
+                
+                <div class="knowledge-card" style="background: linear-gradient(135deg, rgba(99, 102, 241, 0.1), rgba(236, 72, 153, 0.1));">
+                    <p style="color: var(--text); text-align: center; font-size: 1.1rem;">祝你下周在马原课上大放异彩！<br>如果课后老师又抛出了什么刁钻的新题，随时回来找我复盘。</p>
+                    <p style="color: var(--accent); text-align: center; margin-top: 15px; font-size: 1.2rem; font-weight: 600;">整理收工！</p>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- 页脚 -->
+    <footer class="footer">
+        <p>📚 马克思主义基本原理 · 认识论专题完整笔记</p>
+        <p style="margin-top: 10px; font-size: 0.9rem;">汉语言文学专业 · 大二课程 · 含AI教练全流程对话</p>
+    </footer>
+
+    <!-- 回到顶部 -->
+    <div class="back-to-top" id="backToTop">↑</div>
+
+    <script>
+        const backToTop = document.getElementById('backToTop');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 300) {
+                backToTop.classList.add('visible');
+            } else {
+                backToTop.classList.remove('visible');
+            }
+        });
+        backToTop.addEventListener('click', () => {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+    </script>
+</body>
+</html>
